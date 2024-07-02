@@ -1,0 +1,29 @@
+{
+  "name": "keyboard-midi-controller",
+  "version": "1.0.0",
+  "description": "An easy-to-use library made for emulating a MIDI device with your keyboard.",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "repository": {},
+  "scripts": {
+    "build": "tsup"
+  },
+  "keywords": [
+    "midi",
+    "piano",
+    "midi emulator",
+    "keyboard",
+    "synth",
+    "synthesizer",
+    "music",
+    "frequency",
+    "note"
+  ],
+  "author": "-srntz",
+  "license": "MIT",
+  "devDependencies": {
+    "tsup": "^8.1.0",
+    "typescript": "^5.5.3"
+  }
+}
