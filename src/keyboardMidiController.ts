@@ -34,110 +34,128 @@ export class KeyboardMidiController {
     this.autoRestart = false;
     this._frequencyMappingObject = {
       z: {
-        frequency: (1.1892 / 2) * this.baseFrequency * (this.firstOctave / 4),
+        frequency:
+          ((1.1892 / 2) * this.baseFrequency) / 2 ** (4 - this.firstOctave),
         note: "C" + this.firstOctave,
       },
       q: {
-        frequency: (1.1892 / 2) * this.baseFrequency * (this.secondOctave / 4),
+        frequency:
+          ((1.1892 / 2) * this.baseFrequency) / 2 ** (4 - this.secondOctave),
         note: "C" + this.secondOctave,
       },
 
       s: {
-        frequency: (1.2599 / 2) * this.baseFrequency * (this.firstOctave / 4),
+        frequency:
+          ((1.2599 / 2) * this.baseFrequency) / 2 ** (4 - this.firstOctave),
         note: "C#" + this.firstOctave,
       },
       2: {
-        frequency: (1.2599 / 2) * this.baseFrequency * (this.secondOctave / 4),
+        frequency:
+          ((1.2599 / 2) * this.baseFrequency) / 2 ** (4 - this.secondOctave),
         note: "C#" + this.secondOctave,
       },
 
       x: {
-        frequency: (1.3348 / 2) * this.baseFrequency * (this.firstOctave / 4),
+        frequency:
+          ((1.3348 / 2) * this.baseFrequency) / 2 ** (4 - this.firstOctave),
         note: "D" + this.firstOctave,
       },
       w: {
-        frequency: (1.3348 / 2) * this.baseFrequency * (this.secondOctave / 4),
+        frequency:
+          ((1.3348 / 2) * this.baseFrequency) / 2 ** (4 - this.secondOctave),
         note: "D" + this.secondOctave,
       },
 
       d: {
-        frequency: (1.4142 / 2) * this.baseFrequency * (this.firstOctave / 4),
+        frequency:
+          ((1.4142 / 2) * this.baseFrequency) / 2 ** (4 - this.firstOctave),
         note: "D#" + this.firstOctave,
       },
       3: {
-        frequency: (1.4142 / 2) * this.baseFrequency * (this.secondOctave / 4),
+        frequency:
+          ((1.4142 / 2) * this.baseFrequency) / 2 ** (4 - this.secondOctave),
         note: "D#" + this.secondOctave,
       },
 
       c: {
-        frequency: (1.4983 / 2) * this.baseFrequency * (this.firstOctave / 4),
+        frequency:
+          ((1.4983 / 2) * this.baseFrequency) / 2 ** (4 - this.firstOctave),
         note: "E" + this.firstOctave,
       },
       e: {
-        frequency: (1.4983 / 2) * this.baseFrequency * (this.secondOctave / 4),
+        frequency:
+          ((1.4983 / 2) * this.baseFrequency) / 2 ** (4 - this.secondOctave),
         note: "E" + this.secondOctave,
       },
 
       v: {
-        frequency: (1.5874 / 2) * this.baseFrequency * (this.firstOctave / 4),
+        frequency:
+          ((1.5874 / 2) * this.baseFrequency) / 2 ** (4 - this.firstOctave),
         note: "F" + this.firstOctave,
       },
       r: {
-        frequency: (1.5874 / 2) * this.baseFrequency * (this.secondOctave / 4),
+        frequency:
+          ((1.5874 / 2) * this.baseFrequency) / 2 ** (4 - this.secondOctave),
         note: "F" + this.secondOctave,
       },
 
       g: {
-        frequency: (1.6818 / 2) * this.baseFrequency * (this.firstOctave / 4),
+        frequency:
+          ((1.6818 / 2) * this.baseFrequency) / 2 ** (4 - this.firstOctave),
         note: "F#" + this.firstOctave,
       },
       5: {
-        frequency: (1.6818 / 2) * this.baseFrequency * (this.secondOctave / 4),
+        frequency:
+          ((1.6818 / 2) * this.baseFrequency) / 2 ** (4 - this.secondOctave),
         note: "F#" + this.secondOctave,
       },
 
       b: {
-        frequency: (1.7818 / 2) * this.baseFrequency * (this.firstOctave / 4),
+        frequency:
+          ((1.7818 / 2) * this.baseFrequency) / 2 ** (4 - this.firstOctave),
         note: "G" + this.firstOctave,
       },
       t: {
-        frequency: (1.7818 / 2) * this.baseFrequency * (this.secondOctave / 4),
+        frequency:
+          ((1.7818 / 2) * this.baseFrequency) / 2 ** (4 - this.secondOctave),
         note: "G" + this.secondOctave,
       },
 
       h: {
-        frequency: (1.8897 / 2) * this.baseFrequency * (this.firstOctave / 4),
+        frequency:
+          ((1.88775 / 2) * this.baseFrequency) / 2 ** (4 - this.firstOctave),
         note: "G#" + this.firstOctave,
       },
       6: {
-        frequency: (1.8897 / 2) * this.baseFrequency * (this.secondOctave / 4),
+        frequency:
+          ((1.88775 / 2) * this.baseFrequency) / 2 ** (4 - this.secondOctave),
         note: "G#" + this.secondOctave,
       },
 
       n: {
-        frequency: this.baseFrequency * (this.firstOctave / 4),
+        frequency: this.baseFrequency / 2 ** (4 - this.firstOctave),
         note: "A" + this.firstOctave,
       },
       y: {
-        frequency: this.baseFrequency * (this.secondOctave / 4),
+        frequency: this.baseFrequency / 2 ** (4 - this.secondOctave),
         note: "A" + this.secondOctave,
       },
 
       j: {
-        frequency: (1.0595 / 2) * this.baseFrequency * (this.firstOctave / 4),
+        frequency: (1.0595 * this.baseFrequency) / 2 ** (4 - this.firstOctave),
         note: "A#" + this.firstOctave,
       },
-      u: {
-        frequency: (1.0595 / 2) * this.baseFrequency * (this.secondOctave / 4),
+      7: {
+        frequency: (1.0595 * this.baseFrequency) / 2 ** (4 - this.secondOctave),
         note: "A#" + this.secondOctave,
       },
 
       m: {
-        frequency: (1.1225 / 2) * this.baseFrequency * (this.firstOctave / 4),
+        frequency: (1.1225 * this.baseFrequency) / 2 ** (4 - this.firstOctave),
         note: "B" + this.firstOctave,
       },
-      8: {
-        frequency: (1.1225 / 2) * this.baseFrequency * (this.secondOctave / 4),
+      u: {
+        frequency: (1.1225 * this.baseFrequency) / 2 ** (4 - this.secondOctave),
         note: "B" + this.secondOctave,
       },
     };

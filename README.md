@@ -1,6 +1,4 @@
 <img src="https://i.imgur.com/1yvhcup.png" width="700px"/>
-<br>
-<br>
 
 An easy-to-use library made for emulating a MIDI device with your keyboard.  
 Typescript and Javascript compatible.
