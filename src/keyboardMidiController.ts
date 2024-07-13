@@ -9,6 +9,7 @@ export class KeyboardMidiController {
   private _baseFrequency: number;
   private _firstOctave: number;
   private _secondOctave: number;
+  private _velocity: number;
   private _isLinked: boolean;
   private _autoRestart: boolean;
   private _frequencyMappingObject: ControllerFrequencyBindingObjectType;
@@ -25,138 +26,146 @@ export class KeyboardMidiController {
     controllerOutputRelease?: ControllerOutputType,
     baseFrequency: number = 440,
     firstOctave: number = 4,
-    secondOctave: number = 5
+    secondOctave: number = 5,
+    velocity: number = 100
   ) {
     this.baseFrequency = baseFrequency;
     this.firstOctave = firstOctave;
     this.secondOctave = secondOctave;
+    this.velocity = velocity;
     this._isLinked = false;
     this.autoRestart = false;
     this._frequencyMappingObject = {
       z: {
-        frequency:
-          ((1.1892 / 2) * this.baseFrequency) / 2 ** (4 - this.firstOctave),
-        note: "C" + this.firstOctave,
+        keyboard: 1,
+        frequency: 1.1892 / 2,
+        note: "C",
       },
       q: {
-        frequency:
-          ((1.1892 / 2) * this.baseFrequency) / 2 ** (4 - this.secondOctave),
-        note: "C" + this.secondOctave,
+        keyboard: 2,
+        frequency: 1.1892 / 2,
+        note: "C",
       },
 
       s: {
-        frequency:
-          ((1.2599 / 2) * this.baseFrequency) / 2 ** (4 - this.firstOctave),
-        note: "C#" + this.firstOctave,
+        keyboard: 1,
+        frequency: 1.2599 / 2,
+        note: "C#",
       },
       2: {
-        frequency:
-          ((1.2599 / 2) * this.baseFrequency) / 2 ** (4 - this.secondOctave),
-        note: "C#" + this.secondOctave,
+        keyboard: 2,
+        frequency: 1.2599 / 2,
+        note: "C#",
       },
 
       x: {
-        frequency:
-          ((1.3348 / 2) * this.baseFrequency) / 2 ** (4 - this.firstOctave),
-        note: "D" + this.firstOctave,
+        keyboard: 1,
+        frequency: 1.3348 / 2,
+        note: "D",
       },
       w: {
-        frequency:
-          ((1.3348 / 2) * this.baseFrequency) / 2 ** (4 - this.secondOctave),
-        note: "D" + this.secondOctave,
+        keyboard: 2,
+        frequency: 1.3348 / 2,
+        note: "D",
       },
 
       d: {
-        frequency:
-          ((1.4142 / 2) * this.baseFrequency) / 2 ** (4 - this.firstOctave),
-        note: "D#" + this.firstOctave,
+        keyboard: 1,
+        frequency: 1.4142 / 2,
+        note: "D#",
       },
       3: {
-        frequency:
-          ((1.4142 / 2) * this.baseFrequency) / 2 ** (4 - this.secondOctave),
-        note: "D#" + this.secondOctave,
+        keyboard: 2,
+        frequency: 1.4142 / 2,
+        note: "D#",
       },
 
       c: {
-        frequency:
-          ((1.4983 / 2) * this.baseFrequency) / 2 ** (4 - this.firstOctave),
-        note: "E" + this.firstOctave,
+        keyboard: 1,
+        frequency: 1.4983 / 2,
+        note: "E",
       },
       e: {
-        frequency:
-          ((1.4983 / 2) * this.baseFrequency) / 2 ** (4 - this.secondOctave),
-        note: "E" + this.secondOctave,
+        keyboard: 2,
+        frequency: 1.4983 / 2,
+        note: "E",
       },
 
       v: {
-        frequency:
-          ((1.5874 / 2) * this.baseFrequency) / 2 ** (4 - this.firstOctave),
-        note: "F" + this.firstOctave,
+        keyboard: 1,
+        frequency: 1.5874 / 2,
+        note: "F",
       },
       r: {
-        frequency:
-          ((1.5874 / 2) * this.baseFrequency) / 2 ** (4 - this.secondOctave),
-        note: "F" + this.secondOctave,
+        keyboard: 2,
+        frequency: 1.5874 / 2,
+        note: "F",
       },
 
       g: {
-        frequency:
-          ((1.6818 / 2) * this.baseFrequency) / 2 ** (4 - this.firstOctave),
-        note: "F#" + this.firstOctave,
+        keyboard: 1,
+        frequency: 1.6818 / 2,
+        note: "F#",
       },
       5: {
-        frequency:
-          ((1.6818 / 2) * this.baseFrequency) / 2 ** (4 - this.secondOctave),
-        note: "F#" + this.secondOctave,
+        keyboard: 2,
+        frequency: 1.6818 / 2,
+        note: "F#",
       },
 
       b: {
-        frequency:
-          ((1.7818 / 2) * this.baseFrequency) / 2 ** (4 - this.firstOctave),
-        note: "G" + this.firstOctave,
+        keyboard: 1,
+        frequency: 1.7818 / 2,
+        note: "G",
       },
       t: {
-        frequency:
-          ((1.7818 / 2) * this.baseFrequency) / 2 ** (4 - this.secondOctave),
-        note: "G" + this.secondOctave,
+        keyboard: 2,
+        frequency: 1.7818 / 2,
+        note: "G",
       },
 
       h: {
-        frequency:
-          ((1.88775 / 2) * this.baseFrequency) / 2 ** (4 - this.firstOctave),
-        note: "G#" + this.firstOctave,
+        keyboard: 1,
+        frequency: 1.88775 / 2,
+        note: "G#",
       },
       6: {
-        frequency:
-          ((1.88775 / 2) * this.baseFrequency) / 2 ** (4 - this.secondOctave),
-        note: "G#" + this.secondOctave,
+        keyboard: 2,
+        frequency: 1.88775 / 2,
+        note: "G#",
       },
 
       n: {
-        frequency: this.baseFrequency / 2 ** (4 - this.firstOctave),
-        note: "A" + this.firstOctave,
+        keyboard: 1,
+        frequency: 1,
+        note: "A",
       },
       y: {
-        frequency: this.baseFrequency / 2 ** (4 - this.secondOctave),
-        note: "A" + this.secondOctave,
+        keyboard: 2,
+        frequency: 1,
+        note: "A",
       },
 
       j: {
-        frequency: (1.0595 * this.baseFrequency) / 2 ** (4 - this.firstOctave),
-        note: "A#" + this.firstOctave,
+        keyboard: 1,
+        frequency: 1.0595,
+        note: "A#",
       },
       7: {
-        frequency: (1.0595 * this.baseFrequency) / 2 ** (4 - this.secondOctave),
-        note: "A#" + this.secondOctave,
+        keyboard: 2,
+        frequency: 1.0595,
+        note: "A#",
       },
 
       m: {
-        frequency: (1.1225 * this.baseFrequency) / 2 ** (4 - this.firstOctave),
-        note: "B" + this.firstOctave,
+        keyboard: 1,
+        frequency: 1.1225,
+        note: "B",
       },
       u: {
-        frequency: (1.1225 * this.baseFrequency) / 2 ** (4 - this.secondOctave),
-        note: "B" + this.secondOctave,
+        keyboard: 2,
+        frequency: 1.1225,
+        note: "B",
       },
     };
 
@@ -164,19 +173,73 @@ export class KeyboardMidiController {
 
     this._keydownTrigger = (e: KeyboardEvent) => {
       if (!e.repeat && this._bindedKeys.includes(e.key.toLowerCase())) {
-        this._controllerOutputAttack({
-          key: e.key,
-          ...this._frequencyMappingObject[e.key.toLowerCase()],
-        });
+        if (this._frequencyMappingObject[e.key.toLowerCase()].keyboard === 1) {
+          this._controllerOutputAttack({
+            key: e.key,
+            frequency: Number(
+              (
+                (this._frequencyMappingObject[e.key.toLowerCase()].frequency *
+                  this.baseFrequency) /
+                2 ** (4 - this.firstOctave)
+              ).toFixed(3)
+            ),
+            note:
+              this._frequencyMappingObject[e.key.toLowerCase()].note +
+              String(this.firstOctave),
+            velocity: this.velocity,
+          });
+        } else {
+          this._controllerOutputAttack({
+            key: e.key,
+            frequency: Number(
+              (
+                (this._frequencyMappingObject[e.key.toLowerCase()].frequency *
+                  this.baseFrequency) /
+                2 ** (4 - this.secondOctave)
+              ).toFixed(3)
+            ),
+            note:
+              this._frequencyMappingObject[e.key.toLowerCase()].note +
+              String(this.secondOctave),
+            velocity: this.velocity,
+          });
+        }
       }
     };
 
     this._keyupTrigger = (e: KeyboardEvent) => {
       if (!e.repeat && this._bindedKeys.includes(e.key.toLowerCase())) {
-        this._controllerOutputRelease({
-          key: e.key,
-          ...this._frequencyMappingObject[e.key.toLowerCase()],
-        });
+        if (this._frequencyMappingObject[e.key.toLowerCase()].keyboard === 1) {
+          this._controllerOutputAttack({
+            key: e.key,
+            frequency: Number(
+              (
+                (this._frequencyMappingObject[e.key.toLowerCase()].frequency *
+                  this.baseFrequency) /
+                2 ** (4 - this.firstOctave)
+              ).toFixed(3)
+            ),
+            note:
+              this._frequencyMappingObject[e.key.toLowerCase()].note +
+              String(this.firstOctave),
+            velocity: this.velocity,
+          });
+        } else {
+          this._controllerOutputAttack({
+            key: e.key,
+            frequency: Number(
+              (
+                (this._frequencyMappingObject[e.key.toLowerCase()].frequency *
+                  this.baseFrequency) /
+                2 ** (4 - this.secondOctave)
+              ).toFixed(3)
+            ),
+            note:
+              this._frequencyMappingObject[e.key.toLowerCase()].note +
+              String(this.secondOctave),
+            velocity: this.velocity,
+          });
+        }
       }
     };
 
@@ -249,6 +312,19 @@ export class KeyboardMidiController {
   }
   get secondOctave(): number {
     return this._secondOctave;
+  }
+
+  set velocity(newVelocity: number) {
+    if (newVelocity >= 0 && newVelocity <= 100) {
+      this._velocity = newVelocity;
+    } else {
+      throw new Error(
+        "Velocity out of range. Please enter a value between 0 and 100"
+      );
+    }
+  }
+  get velocity(): number {
+    return this._velocity;
   }
 
   get isLinked(): boolean {

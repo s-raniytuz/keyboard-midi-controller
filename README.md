@@ -29,8 +29,8 @@ To make the controller usable, you need to connect it to your page
 
 Now, if you open developer tools and press a key, you should be able to see logs such as these:
 
-    Attack Event > {key: 'z', frequency: 261.624, note: 'C4'}
-    Release Event > {key: 'z', frequency: 261.624, note: 'C4'}
+    Attack Event > {key: 'z', frequency: 261.624, note: 'C4', velocity: 100}
+    Release Event > {key: 'z', frequency: 261.624, note: 'C4', velocity: 100}
 
 ## 🦾 Tailoring it to your needs
 
@@ -79,6 +79,16 @@ An octave can not have a value lower than 1 and higher than 7
 
     controller.firstOctave = 3
 
+### Velocity
+
+    velocity: number = 100
+
+A field that does not play a significant role behind a controller scenes, but can be used by the user as it is included in the output object
+
+Velocity can not be lower than 0 and higher than 100
+
+    controller.velocity = 63
+
 ### Constructor
 
     constructor(
@@ -86,7 +96,8 @@ An octave can not have a value lower than 1 and higher than 7
         controllerOutputRelease?: ControllerOutputType,
         baseFrequency: number = 440,
         firstOctave: number = 4,
-        secondOctave: number = 5
+        secondOctave: number = 5,
+        velocity: number = 100
     )
 
 ## ✴️ Additional options
@@ -150,6 +161,7 @@ Returns a controller to its default state.
         key: string;
         frequency: number;
         note: string;
+        velocity: number;
     };
 
 ### ControllerOutputType
@@ -163,5 +175,5 @@ Returns a controller to its default state.
 ### ControllerFrequencyBindingObjectType
 
     type ControllerFrequencyBindingObjectType = {
-        [key: string]: { note: string; frequency: number }
+        [key: string]: { keyboard: number, note: string, frequency: number }
     }
