@@ -210,7 +210,7 @@ export class KeyboardMidiController {
     this._keyupTrigger = (e: KeyboardEvent) => {
       if (!e.repeat && this._bindedKeys.includes(e.key.toLowerCase())) {
         if (this._frequencyMappingObject[e.key.toLowerCase()].keyboard === 1) {
-          this._controllerOutputAttack({
+          this._controllerOutputRelease({
             key: e.key,
             frequency: Number(
               (
