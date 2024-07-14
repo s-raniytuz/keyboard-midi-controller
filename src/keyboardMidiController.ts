@@ -225,7 +225,7 @@ export class KeyboardMidiController {
             velocity: this.velocity,
           });
         } else {
-          this._controllerOutputAttack({
+          this._controllerOutputRelease({
             key: e.key,
             frequency: Number(
               (
