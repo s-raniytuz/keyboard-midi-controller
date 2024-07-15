@@ -9,6 +9,11 @@ export type ControllerOutputType = (keyProps: ControllerEventType) => void;
 
 export type ControllerTriggerType = (e: KeyboardEvent) => void;
 
-export type ControllerFrequencyBindingObjectType = {
-  [key: string]: { keyboard: number; note: string; frequency: number };
+export type ControllerKeyPropsObjectType = {
+  [key: string]: {
+    keyboard: number;
+    note: string;
+    frequency: number;
+    state: "pressed" | "released";
+  };
 };

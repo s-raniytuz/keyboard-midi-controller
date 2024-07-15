@@ -2,7 +2,7 @@ import {
   ControllerEventType,
   ControllerOutputType,
   ControllerTriggerType,
-  ControllerFrequencyBindingObjectType,
+  ControllerKeyPropsObjectType,
 } from "./types";
 
 export class KeyboardMidiController {
@@ -12,8 +12,7 @@ export class KeyboardMidiController {
   private _velocity: number;
   private _isLinked: boolean;
   private _autoRestart: boolean;
-  private _frequencyMappingObject: ControllerFrequencyBindingObjectType;
-  private _bindedKeys: string[];
+  private _keyPropsObject: ControllerKeyPropsObjectType;
   private _keydownTrigger: ControllerTriggerType;
   private _keyupTrigger: ControllerTriggerType;
   private _linkedKeydownTrigger: ControllerTriggerType | undefined;
@@ -35,156 +34,193 @@ export class KeyboardMidiController {
     this.velocity = velocity;
     this._isLinked = false;
     this.autoRestart = false;
-    this._frequencyMappingObject = {
+    this._keyPropsObject = {
       z: {
         keyboard: 1,
         frequency: 1.1892 / 2,
         note: "C",
+        state: "released",
       },
       q: {
         keyboard: 2,
         frequency: 1.1892 / 2,
         note: "C",
+        state: "released",
       },
 
       s: {
         keyboard: 1,
         frequency: 1.2599 / 2,
         note: "C#",
+        state: "released",
       },
       2: {
         keyboard: 2,
         frequency: 1.2599 / 2,
         note: "C#",
+        state: "released",
       },
 
       x: {
         keyboard: 1,
         frequency: 1.3348 / 2,
         note: "D",
+        state: "released",
       },
       w: {
         keyboard: 2,
         frequency: 1.3348 / 2,
         note: "D",
+        state: "released",
       },
 
       d: {
         keyboard: 1,
         frequency: 1.4142 / 2,
         note: "D#",
+        state: "released",
       },
       3: {
         keyboard: 2,
         frequency: 1.4142 / 2,
         note: "D#",
+        state: "released",
       },
 
       c: {
         keyboard: 1,
         frequency: 1.4983 / 2,
         note: "E",
+        state: "released",
       },
       e: {
         keyboard: 2,
         frequency: 1.4983 / 2,
         note: "E",
+        state: "released",
       },
 
       v: {
         keyboard: 1,
         frequency: 1.5874 / 2,
         note: "F",
+        state: "released",
       },
       r: {
         keyboard: 2,
         frequency: 1.5874 / 2,
         note: "F",
+        state: "released",
       },
 
       g: {
         keyboard: 1,
         frequency: 1.6818 / 2,
         note: "F#",
+        state: "released",
       },
       5: {
         keyboard: 2,
         frequency: 1.6818 / 2,
         note: "F#",
+        state: "released",
       },
 
       b: {
         keyboard: 1,
         frequency: 1.7818 / 2,
         note: "G",
+        state: "released",
       },
       t: {
         keyboard: 2,
         frequency: 1.7818 / 2,
         note: "G",
+        state: "released",
       },
 
       h: {
         keyboard: 1,
         frequency: 1.88775 / 2,
         note: "G#",
+        state: "released",
       },
       6: {
         keyboard: 2,
         frequency: 1.88775 / 2,
         note: "G#",
+        state: "released",
       },
 
       n: {
         keyboard: 1,
         frequency: 1,
         note: "A",
+        state: "released",
       },
       y: {
         keyboard: 2,
         frequency: 1,
         note: "A",
+        state: "released",
       },
 
       j: {
         keyboard: 1,
         frequency: 1.0595,
         note: "A#",
+        state: "released",
       },
       7: {
         keyboard: 2,
         frequency: 1.0595,
         note: "A#",
+        state: "released",
       },
 
       m: {
         keyboard: 1,
         frequency: 1.1225,
         note: "B",
+        state: "released",
       },
       u: {
         keyboard: 2,
         frequency: 1.1225,
         note: "B",
+        state: "released",
       },
     };
 
-    this._bindedKeys = Object.keys(this._frequencyMappingObject);
+    /* 
+      trigger is called only if the event is not repeated (!e.repeat),
+      
+      pressed key is binded (this._keyPropsObject.hasOwnProperty(e.key.toLowerCase())),
+
+      and the state of the key is opposite to the called event:
+        (this._keyPropsObject[e.key.toLowerCase()].state === "released" if it is Attack Event or "pressed" if Release Event)
+    */
 
     this._keydownTrigger = (e: KeyboardEvent) => {
-      if (!e.repeat && this._bindedKeys.includes(e.key.toLowerCase())) {
-        if (this._frequencyMappingObject[e.key.toLowerCase()].keyboard === 1) {
+      if (
+        !e.repeat &&
+        this._keyPropsObject.hasOwnProperty(e.key.toLowerCase()) &&
+        this._keyPropsObject[e.key.toLowerCase()].state === "released"
+      ) {
+        this._keyPropsObject[e.key.toLowerCase()].state = "pressed";
+
+        if (this._keyPropsObject[e.key.toLowerCase()].keyboard === 1) {
           this._controllerOutputAttack({
             key: e.key,
             frequency: Number(
               (
-                (this._frequencyMappingObject[e.key.toLowerCase()].frequency *
+                (this._keyPropsObject[e.key.toLowerCase()].frequency *
                   this.baseFrequency) /
                 2 ** (4 - this.firstOctave)
               ).toFixed(3)
             ),
             note:
-              this._frequencyMappingObject[e.key.toLowerCase()].note +
+              this._keyPropsObject[e.key.toLowerCase()].note +
               String(this.firstOctave),
             velocity: this.velocity,
           });
@@ -193,13 +229,13 @@ export class KeyboardMidiController {
             key: e.key,
             frequency: Number(
               (
-                (this._frequencyMappingObject[e.key.toLowerCase()].frequency *
+                (this._keyPropsObject[e.key.toLowerCase()].frequency *
                   this.baseFrequency) /
                 2 ** (4 - this.secondOctave)
               ).toFixed(3)
             ),
             note:
-              this._frequencyMappingObject[e.key.toLowerCase()].note +
+              this._keyPropsObject[e.key.toLowerCase()].note +
               String(this.secondOctave),
             velocity: this.velocity,
           });
@@ -208,19 +244,25 @@ export class KeyboardMidiController {
     };
 
     this._keyupTrigger = (e: KeyboardEvent) => {
-      if (!e.repeat && this._bindedKeys.includes(e.key.toLowerCase())) {
-        if (this._frequencyMappingObject[e.key.toLowerCase()].keyboard === 1) {
+      if (
+        !e.repeat &&
+        this._keyPropsObject.hasOwnProperty(e.key.toLowerCase()) &&
+        this._keyPropsObject[e.key.toLowerCase()].state === "pressed"
+      ) {
+        this._keyPropsObject[e.key.toLowerCase()].state = "released";
+
+        if (this._keyPropsObject[e.key.toLowerCase()].keyboard === 1) {
           this._controllerOutputRelease({
             key: e.key,
             frequency: Number(
               (
-                (this._frequencyMappingObject[e.key.toLowerCase()].frequency *
+                (this._keyPropsObject[e.key.toLowerCase()].frequency *
                   this.baseFrequency) /
                 2 ** (4 - this.firstOctave)
               ).toFixed(3)
             ),
             note:
-              this._frequencyMappingObject[e.key.toLowerCase()].note +
+              this._keyPropsObject[e.key.toLowerCase()].note +
               String(this.firstOctave),
             velocity: this.velocity,
           });
@@ -229,13 +271,13 @@ export class KeyboardMidiController {
             key: e.key,
             frequency: Number(
               (
-                (this._frequencyMappingObject[e.key.toLowerCase()].frequency *
+                (this._keyPropsObject[e.key.toLowerCase()].frequency *
                   this.baseFrequency) /
                 2 ** (4 - this.secondOctave)
               ).toFixed(3)
             ),
             note:
-              this._frequencyMappingObject[e.key.toLowerCase()].note +
+              this._keyPropsObject[e.key.toLowerCase()].note +
               String(this.secondOctave),
             velocity: this.velocity,
           });
@@ -262,6 +304,10 @@ export class KeyboardMidiController {
       this._controllerOutputRelease = controllerOutputRelease;
     }
   }
+
+  /*
+    Field getters and setters
+  */
 
   set baseFrequency(newBaseFrequency: number) {
     if (newBaseFrequency > 0 && newBaseFrequency <= 20000) {
@@ -407,6 +453,10 @@ export class KeyboardMidiController {
   get controllerOutputRelease(): ControllerOutputType {
     return this._controllerOutputRelease;
   }
+
+  /*
+    Methods
+  */
 
   link() {
     if (this._isLinked === false) {
